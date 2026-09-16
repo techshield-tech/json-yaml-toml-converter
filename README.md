@@ -7,6 +7,7 @@ the network.
 **Live:** https://techshield-tech.github.io/json-yaml-toml-converter/
 
 Part of [MMOALL Developer Tools](https://mmoall.com/tools).
+Also available at [mmoall.com/tools/json-yaml-toml-converter](https://mmoall.com/tools/json-yaml-toml-converter).
 
 ## Features
 
@@ -39,17 +40,19 @@ Part of [MMOALL Developer Tools](https://mmoall.com/tools).
 ```
 src/
 ├── main.tsx              # Entry point
-├── index.css             # Tailwind + theme tokens (light/dark)
+├── index.css             # Tailwind import + theme tokens (from @mmoall/tool-kit)
 ├── tool.config.ts        # Tool metadata: slug, name, description, category
-├── shell/                # Shared MMOALL tool shell (same across tool repos)
-│   ├── AppShell.tsx      # Header/footer, theme handling, embed mode
-│   ├── embed.ts          # iframe embed contract (postMessage)
-│   └── ui.tsx            # UI primitives and icons
+├── vite-env.d.ts         # Vite/TypeScript ambient types
 └── tool/                 # Converter-specific code
     ├── Tool.tsx          # The tool UI
     ├── formats.ts        # parse / serialize / convert / detect, error positions
     └── samples.ts        # The same sample document in JSON, YAML, and TOML
 ```
+
+Shared shell/UI, theme, embed, and SEO code (header/footer, theme handling, embed
+mode, UI primitives and icons, the `postMessage` embed contract) comes from the
+[`@mmoall/tool-kit`](https://github.com/techshield-tech/tool-kit) npm dependency,
+not from a local `src/shell/` directory.
 
 ## Running locally
 
@@ -83,7 +86,8 @@ With npm: `npm install`, `npm run dev`, `npm run build`, `npm run preview`.
 
 ### Base path
 
-The asset base URL is chosen at build time in `vite.config.ts`:
+The asset base URL is chosen at build time by the `mmoallTool` preset (from
+`@mmoall/tool-kit/vite`) that `vite.config.ts` calls:
 
 | Condition               | `base`             | Used for                    |
 | ----------------------- | ------------------ | --------------------------- |
